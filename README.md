@@ -29,7 +29,7 @@ I want to see the history (operation, date, amount, balance) of my operations
 
 ### Clone the project
 ```text
-    https://github.com/laghrissi/bank-account-kata.git
+    https://github.com/laghrissi/kata-bank-account.git
 ```
 
 ### Execute the project with maven
