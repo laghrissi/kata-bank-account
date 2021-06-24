@@ -56,6 +56,14 @@ public interface AccountController {
     @RequestMapping(method = RequestMethod.GET, value = "{id}/operations")
     ResponseEntity<List<Operation>> getOperationByAccount(@PathVariable("id") String id, Pageable pageable, Authentication authentication);
 
-    @RequestMapping(value = "{id}/operations/print")
+
+    @io.swagger.v3.oas.annotations.Operation(summary = "prints all operations by account",
+            responses = {
+                    @ApiResponse(responseCode = "200", content = @Content(mediaType = "text/plain")),
+                    @ApiResponse(responseCode = "403", description = "Access denied", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+                    @ApiResponse(responseCode = "404", description = "Account not found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+            }
+    )
+    @RequestMapping(method = RequestMethod.GET, value = "{id}/operations/print")
     void printOperations(@PathVariable("id") String id, Authentication authentication, HttpServletResponse response) throws IOException;
 }
