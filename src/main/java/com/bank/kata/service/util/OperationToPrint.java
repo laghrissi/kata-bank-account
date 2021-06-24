@@ -7,8 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class OperationToPrint {
-    static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-    static String HEADER =  "Date               ||   amount    ||   Balance   \n";
+    private static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private static String HEADER =  "Date               ||   amount    ||   Balance   \n";
 
     public static StringBuilder operationToString(List<Operation> operations) {
         StringBuilder operationString = new StringBuilder();
