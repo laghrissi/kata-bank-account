@@ -7,6 +7,7 @@ import com.bank.kata.domain.util.OperationType;
 import com.bank.kata.repository.OperationRepository;
 import com.bank.kata.service.AccountService;
 import com.bank.kata.service.OperationService;
+import com.bank.kata.service.util.OperationToPrint;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,14 @@ public class OperationServiceImpl implements OperationService {
     public List<Operation> getOperationByAccount(Account account, Pageable pageable) {
         final Page<Operation> operationsByAccount = operationRepository.findByAccount(account, pageable);
         return operationsByAccount.getContent();
+    }
+
+    @Override
+    public StringBuilder printStatements(Account account) {
+        final List<Operation> allByAccount = operationRepository.findAllByAccountOrderByDateDesc(account);
+        // date    ||amount    ||balance
+        final StringBuilder operationsStringBuilder = OperationToPrint.operationToString(allByAccount);
+        return operationsStringBuilder;
     }
 
     private void manageBalanceAccount(OperationRequest operationRequest, Account account) {

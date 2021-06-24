@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("/api/account/")
@@ -53,4 +55,7 @@ public interface AccountController {
     )
     @RequestMapping(method = RequestMethod.GET, value = "{id}/operations")
     ResponseEntity<List<Operation>> getOperationByAccount(@PathVariable("id") String id, Pageable pageable, Authentication authentication);
+
+    @RequestMapping(value = "{id}/operations/print")
+    void printOperations(@PathVariable("id") String id, Authentication authentication, HttpServletResponse response) throws IOException;
 }

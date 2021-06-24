@@ -19,6 +19,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -62,6 +64,15 @@ public class AccountControllerImpl implements AccountController {
         final List<Operation> operationByAccount = operationService.getOperationByAccount(account.get(),
                 PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("date")));
         return new ResponseEntity<>(operationByAccount, HttpStatus.OK);
+    }
+
+    @Override
+    public void printOperations(String id, Authentication authentication, HttpServletResponse response) throws IOException {
+        logger.info("printOperations(): account id {}", id);
+        response.setContentType("text/plain; charset=utf-8");
+        final Optional<Account> account = accountService.getAccountById(UUID.fromString(id));
+        verify(id, authentication, account);
+        response.getWriter().print(operationService.printStatements(account.get()));
     }
 
     private void verify(String id, Authentication authentication, Optional<Account> account) {

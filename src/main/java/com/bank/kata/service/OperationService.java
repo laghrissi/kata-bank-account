@@ -13,4 +13,6 @@ public interface OperationService {
     Operation registerOperation(OperationRequest operationRequest, Account account);
 
     List<Operation> getOperationByAccount(Account account, Pageable pageable);
+
+    StringBuilder printStatements(Account account);
 }
